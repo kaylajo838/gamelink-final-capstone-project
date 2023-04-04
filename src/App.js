@@ -6,6 +6,9 @@ import Footer from "./components/Footer"
 import Home from "./views/Home";
 import GameSearch from './views/GameSearch';
 import MyLibrary from './views/MyLibrary';
+import SignUp from './views/SignUp';
+import SignIn from './views/SignIn';
+
 
 function App() {
   return (
@@ -18,6 +21,8 @@ function App() {
           <Route path="/" element={<Home/>}/>
           <Route path='/game-search' element={<GameSearch/>}/>
           <Route path="/my-library" element={<MyLibrary/>}/>
+          <Route path="/sign-up" element={<SignUp/>}/>
+          <Route path="/sign-in" element={<SignIn/>}/>
           </Routes>
 
           <Footer/>
