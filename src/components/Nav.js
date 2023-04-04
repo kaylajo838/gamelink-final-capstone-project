@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -12,15 +12,20 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import logo from '../images/game-logo.png'
 
-const pages = ['Home', 'Game Search', 'My Library'];
-const settings = ['Profile', 'Edit Profile', 'Logout', 'Sign Up', 'Sign In'];
+import AuthState from "./AuthState";
+import { auth } from '../firebase'
+import { signOut } from 'firebase/auth'
+import { useNavigate } from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth'
 
 function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [authUser, setAuthUser] = useState('')
+  const [firstNameInitial, setFirstNameInitial] = useState('');
+  const [lastNameInitial, setLastNameInitial] = useState('');
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -36,6 +41,41 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const navigate = useNavigate()
+
+  const userSignOut = () => {
+      signOut(auth).then(() => {
+          // Sign-out successful.
+          console.log('signed out')
+          navigate('/sign-in')
+        }).catch((error) => {
+          // An error happened.
+          console.log(error.message)
+        });
+    }
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setAuthUser(user)
+          console.log(user)
+          let splitUserName = user.displayName.split(' ')
+          let firstName = splitUserName[0];
+          let lastName = splitUserName[1];
+          setFirstNameInitial(firstName ? firstName[0] : '');
+          setLastNameInitial(lastName ? lastName[0] : '');
+        } else {
+          setAuthUser('')
+          setFirstNameInitial('');
+          setLastNameInitial('');
+        }
+      }, [authUser]);
+  });
+
+  
+
+  
 
   return (
     <AppBar
@@ -103,6 +143,7 @@ function ResponsiveAppBar() {
                 display: { xs: "block", md: "none" },
               }}
             >
+              
               <MenuItem onClick={handleCloseNavMenu}>
                 <Link
                   to="/"
@@ -153,6 +194,8 @@ function ResponsiveAppBar() {
               style={{ marginRight: "2rem", height: "2.5rem" }}
             />
           </Typography>
+
+          {authUser ? (
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             <Button
               component={Link}
@@ -179,13 +222,43 @@ function ResponsiveAppBar() {
               My Library
             </Button>
           </Box>
+          ) : null }
 
+          {!authUser ? (
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            <Button
+              component={Link}
+              to="/sign-up"
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              Sign Up
+            </Button>
+            <Button
+              component={Link}
+              to="/sign-in"
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              Sign In
+            </Button>
+          </Box>
+          ) : null }
+
+          <Box>
+           <AuthState/>
+          </Box>
+          
           <Box sx={{ flexGrow: 0 }}>
+            {authUser ? (
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
+                <Avatar sx={{ bgcolor: "#479acd" }}>{firstNameInitial}{lastNameInitial}</Avatar>
               </IconButton>
             </Tooltip>
+            ) : null}
+
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"
@@ -202,6 +275,8 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
+
+              {authUser ? (
               <MenuItem onClick={handleCloseNavMenu}>
                 <Link
                   to="/profile"
@@ -210,7 +285,9 @@ function ResponsiveAppBar() {
                   <Typography textAlign="center">Profile</Typography>
                 </Link>
               </MenuItem>
+              ) : null}
 
+              {authUser ? (
               <MenuItem onClick={handleCloseNavMenu}>
                 <Link
                   to="/edit-profile"
@@ -219,33 +296,30 @@ function ResponsiveAppBar() {
                   <Typography textAlign="center">Edit Profile</Typography>
                 </Link>
               </MenuItem>
+              ) : null}
 
+              {authUser ? (
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Link
+                  to="/wishlist"
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <Typography textAlign="center">My Wishlist</Typography>
+                </Link>
+              </MenuItem>
+              ) : null}
+
+              {authUser ? (
               <MenuItem onClick={handleCloseNavMenu}>
                 <Link
                   to="/logout"
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
-                  <Typography textAlign="center">Log Out</Typography>
+                  <Typography textAlign="center" onClick={userSignOut}>Log Out</Typography>
                 </Link>
               </MenuItem>
+              ) : null}
 
-              <MenuItem onClick={handleCloseNavMenu}>
-                <Link
-                  to="/sign-up"
-                  style={{ textDecoration: "none", color: "inherit" }}
-                >
-                  <Typography textAlign="center">Sign Up</Typography>
-                </Link>
-              </MenuItem>
-
-              <MenuItem onClick={handleCloseNavMenu}>
-                <Link
-                  to="/sign-in"
-                  style={{ textDecoration: "none", color: "inherit" }}
-                >
-                  <Typography textAlign="center">Sign In</Typography>
-                </Link>
-              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
