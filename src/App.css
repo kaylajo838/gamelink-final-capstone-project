@@ -43,6 +43,13 @@ body, html {
   padding: 0;
 } 
 
+.auth-user-div {
+  display: flex;
+  margin-right: 20px;
+  font-family: 'Roboto', sans-serif;
+}
+
+
 
 /* Media Queries */
 /* @media (max-width: 912px) {
