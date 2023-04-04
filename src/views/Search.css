@@ -1,0 +1,157 @@
+.search-main-body-container {
+    height: calc(100vh - 120.5px);
+}
+
+.search-container {
+    margin:0;
+    max-height: calc(100vh - 120.5px);
+    width: 100vw;
+    overflow:hidden;
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: center;
+    background-image: url('../images/gaming-background.png'); 
+    /* background-image: url('./images/smaller-gaming-background3.png');  */
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-position:center center;
+    background-attachment: fixed;
+    /* height: 100vh; */
+    width: 100vw;
+    height: 100vh;
+}
+
+.search-main-body {
+    display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center; */
+  /* max-height: 100vh; */
+  max-height: calc(100vh - 120.5px);
+}
+
+.serach-form-main-container {
+    display: flex;
+    justify-content: center;
+}
+
+.search-main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* height: 100%; */
+    /* min-height: 100vh; */
+    /* height: auto; */
+    width: 100vw;
+    overflow: auto;
+    padding-top: 30px;
+    padding-bottom: 50px;
+    max-height: calc(100vh - 120.5px);
+}
+
+.search-form-container {
+    /* position: fixed; */
+    /* top: 80px;  */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #4c4c4b;
+    border: 5px solid #2ca627;
+    border-radius: 0.5em;
+    max-width: 100%;
+    height: auto;
+    margin: 0;
+    margin-top: 50px;
+    /* margin-top: -200px; */
+    padding: 20px;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    /* font-size: 20px; */
+    font-size: 16px;
+    text-align: center;
+    box-shadow: 0 0 30px 40px black, inset 0 0 0 5px white;
+    /* box-shadow: 0 0 0 5px black, inset 0 0 0 5px white; */
+    /* box-shadow: 0 30px 40px 40px rgba(0,0,0,.1); */
+}
+
+.search-h1 {
+    margin: 0;
+}
+
+.search-p:nth-of-type(1) {
+    margin-bottom: 0;
+}
+
+.search-second-search {
+    margin-bottom: 0;
+    /* margin-top: 0; */
+}
+
+.search-line {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.search-line .search-p {
+    margin-top: 0;
+}
+
+.search-line .search-hr {
+    width: 100px;
+    background-color: white;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: #2ca627 !important;
+  }
+
+
+.search-title-btn {
+    width: auto !important;
+}
+
+/* .search-selected-btn {
+    
+} */
+
+/* .search-card-container {
+    margin-top: 100px;
+    margin-bottom: 100px;
+    display: flex;
+    justify-content: center;
+    margin-right: auto;
+    margin-left: auto;
+} */
+
+/* .search-card-container {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 50px;
+    padding-left: 50px;
+} */
+
+.search-card-container {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 50px;
+    padding-left: 50px;
+    /* overflow: hidden; */
+    width: fit-content;
+    /* gap: 20px; */
+  }
+
+/* .GameCard {
+    margin: 0 auto;
+} */

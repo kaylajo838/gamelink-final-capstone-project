@@ -1,0 +1,156 @@
+.home-main-body-container {
+  height: calc(100vh - 120.5px);
+}
+
+.home-main-div {
+  margin:0;
+  max-height: calc(100vh - 120.5px);
+  width: 100vw;
+  overflow:hidden;
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: center;
+  background-image: url('../images/gaming-background.png'); 
+  /* background-image: url('./images/smaller-gaming-background3.png');  */
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-position:center center;
+  background-attachment: fixed;
+  /* height: 100vh; */
+  width: 100vw;
+  height: 100vh;
+}
+
+.home-main-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-height: 100vh;
+}
+
+.home-body-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: #4c4c4b;
+  border: 10px solid #2ca627;
+  border-radius: 0.5em;
+  max-width: 800px;
+  max-height: 500px;
+  /* max-width: 60rem; */
+  /* margin: 10px auto; */
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  /* font-size: 20px; */
+  font-size: 16px;
+  text-align: center;
+  box-shadow: 0 0 30px 40px black, inset 0 0 0 5px white;
+  /* box-shadow: 0 0 0 10px black, inset 0 0 0 10px white; */
+}
+
+.home-container .home-p:nth-of-type(4) {
+  line-height: 2;
+}
+
+.home-container .home-p {
+  margin-top: 10px;
+}
+
+.home-img {
+  /* height: 10rem; */
+  height: 8rem;
+}
+
+.home-container .home-p:nth-of-type(1) {
+  margin-top: 10px;
+  margin-bottom: 16px;
+}
+
+.home-icon-span-start,
+.home-icon-span-end {
+  padding: 10px;
+  vertical-align: middle;
+  margin: 10px;
+}
+
+.home-container {
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+
+.multi-line-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.home-paragraph-container {
+  flex: 1;
+}
+
+.home-logo-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  /* background: radial-gradient(white, #4c4c4b); */
+  background-color: #4c4c4b;
+  border: 5px solid #2ca627;
+  border-radius: 0.5em;
+  width: 100%;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  text-align: center;
+  box-shadow: 0 0 15px 20px black, inset 0 0 0 5px white;
+  /* box-shadow: 0 0 0 5px black, inset 0 0 0 5px white; */
+  height: 100px;
+  width: 100px;
+}
+
+.home-logo-box:nth-of-type(3),
+.home-logo-box:nth-of-type(4) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: #4c4c4b;
+  border: 5px solid #2ca627;
+  border-radius: 0.5em;
+  width: 100%;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  text-align: center;
+  box-shadow: 0 0 20px 10px white, inset 0 0 0 5px black;
+  /* box-shadow: 0 0 0 5px white, inset 0 0 0 5px black; */
+}
+
+.home-logo-container {
+  display: flex;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  gap: 50px;
+}
+
+.home-logo-img {
+  max-height: 100px;
+}
