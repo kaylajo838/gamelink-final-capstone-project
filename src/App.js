@@ -8,6 +8,7 @@ import GameSearch from './views/GameSearch';
 import MyLibrary from './views/MyLibrary';
 import SignUp from './views/SignUp';
 import SignIn from './views/SignIn';
+import Wishlist from './views/Wishlist';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/my-library" element={<MyLibrary/>}/>
           <Route path="/sign-up" element={<SignUp/>}/>
           <Route path="/sign-in" element={<SignIn/>}/>
+          <Route path='/wishlist' element={<Wishlist />}/>
           </Routes>
 
           <Footer/>
