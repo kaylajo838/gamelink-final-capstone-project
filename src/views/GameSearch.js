@@ -23,39 +23,41 @@ export default function GameSearch() {
 
 // ------------ Section handling fetching to api when title is entered into form ------------ //
   
-//  Handles submit when title of game is inputted into form
-  const handleTitleSubmit = async (event) => {
-    event.preventDefault();
-    setGameTitleData([]);
-    setIsSearchSubmitted(true);
-    const title = gameTitle;
-    const apiKey = "moby_lNj1n04CgAI9jPfD6UCFtu6UKBF";
-    const gameData = await fetchGameData(title, apiKey);
-    const gameTitleArray = gameData.games.map((game) => {
-      const gameTitle = game.title;
-      const gameDescription = game.description;
-      const gameGenre = game.genres;
-      const gameGenreArray = gameGenre.map((genre) => genre.genre_name);
-      const gameScore = game.moby_score;
-      const gamePlatforms = game.platforms;
-      const platformNamesArray = gamePlatforms.map(
-        (platform) => platform.platform_name
-      );
-      const gameCover = game.sample_cover && game.sample_cover.image;
-  
-      return {
-        title: gameTitle,
-        description: gameDescription,
-        genre: gameGenreArray,
-        score: gameScore,
-        platform: platformNamesArray,
-        coverImg: gameCover,
-      };
-    });
-    setGameTitleData(gameTitleArray);
-    setGameTitle("");
-  };
-  
+
+const handleTitleSubmit = async (event) => {
+  // const url = await fetch(`https://api.rawg.io/api/games/assassins-creed-valhalla?key=${apiKey}`)
+  // const data = await url.json()
+  event.preventDefault();
+  setGameTitleData([]);
+  const apiKey = 'abec424581074dfd9006811f98107886'
+  const title = gameTitle;
+  const gameData = await fetchGameData(title, apiKey);
+
+  const gameDataTitle = gameData.name;
+  const gameDescription = gameData.description_raw;
+  const gameGenre = gameData.genres;
+  const gameGenreArray = gameGenre.map((genre) => genre.name);
+  const gameScore = gameData.metacritic;
+  const gamePlatforms = gameData.platforms;
+  const platformNamesArray = gamePlatforms.map(
+    (platform) => platform.platform.name
+  );
+  const gameCover = gameData.background_image
+
+
+  const gameTitleArray = [{
+    title: gameDataTitle,
+    description: gameDescription,
+    genre: gameGenreArray,
+    score: gameScore,
+    platform: platformNamesArray,
+    coverImg: gameCover,
+  }];
+  setGameTitleData(gameTitleArray);
+  setGameTitle("");
+  setIsSearchSubmitted(true);
+}
+
   // Remove previous search results from the DOM
   const cleanup = () => {
     setIsSearchSubmitted(false);
@@ -67,64 +69,72 @@ export default function GameSearch() {
     return () => cleanup();
   }, []);
 
-// // const parser = new DOMParser();
-// // const htmlDoc = parser.parseFromString(gameData.games[0].description, 'text/html');
-// // const firstParagraph = htmlDoc.querySelector('p');
-// // const gameDescription = firstParagraph.innerHTML;
-
-  
   // fetch to api to get game by title search 
   async function fetchGameData(title, apiKey) {
-    const encodedTitle = encodeURIComponent(title);
-    const encodedApiKey = encodeURIComponent(apiKey);
+    const slugTitle = title.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/[\s_-]+/g, '-').replace(/^-+|-+$/g, '');
 
-    const url = `https://api.mobygames.com/v1/games?title=${encodedTitle}&api_key=${encodedApiKey}`;
+    const url = `https://api.rawg.io/api/games/${slugTitle}?key=${apiKey}`;
 
     try {
       const response = await fetch(url);
       const data = await response.json();
+      console.log(data)
       return data;
     } catch (error) {
       console.error(error);
       return null;
     }
   }
+
+
 // ---------------------------------------------------------------------------------------------------------//
 
 // ------------ Section handling fetching to api when genre and/or platform is entered into form ------------ //
 
 // Object holding genres with their id's as the value
-  const genreIds = {
-    "Action": 1,
-    "Adventure": 2,
-    "Educational": 12,
-    "Gambling": 28,
-    "Puzzle": 118,
-    "Racing / Driving": 6,
-    "Role-playing (RPG)": 50,
-    "Simulation": 3,
-    "Sports": 5,
-    "Strategy": 4,
-    "1st-person": 7,
-    "3rd-person (Other)": 126
-  }
+const genreIds = {
+  "Action": 4,
+  "Adventure": 3,
+  "Arcade": 11,
+  "Casual": 40,
+  "Educational": 34,
+  "Family": 19,
+  "Fighting": 6,
+  "Indie": 51,
+  "Massively Multiplayer": 59,
+  "Puzzle": 7,
+  "Racing": 1,
+  "RPG": 5,
+  "Shooter": 2,
+  "Simulation": 14,
+  "Sports": 15,
+  "Strategy": 10,
+}
 
 // Object holding platforms with their id's as their value
-  const platformIds = {
-    "Macintosh": 74,
-    "Nintendo Switch": 203,
-    "Oculus Quest": 271,
-    "Playstation": 6,
-    "Playstation 2": 7,
-    "Playstation 3": 81,
-    "Playstation 4": 141,
-    "Playstation 5": 288,
-    "Xbox": 13,
-    "Xbox 360": 69,
-    "Xbox One": 142,
-    "Xbox Series": 289,
-    "Windows": 3
-  }
+const platformIds = {
+  "Macintosh": 5,
+  "Nintendo Switch": 7,
+  "Playstation": 27,
+  "Playstation 2": 15,
+  "Playstation 3": 16,
+  "Playstation 4": 18,
+  "Playstation 5": 187,
+  "Xbox": 80,
+  "Xbox 360": 14,
+  "Xbox One": 1,
+  "Xbox Series S|X": 186,
+  "Windows": 4
+}
+
+// const testapi = async () => {
+//   const apiKey = 'abec424581074dfd9006811f98107886'
+//   const url = await fetch(`https://api.rawg.io/api/genres?key=${apiKey}`)
+//   const data = await url.json()
+//   console.log(data.results)
+// }
+// testapi()
+
 
   const handleGenreChange = (event) => {
     // event.preventDefault();
@@ -139,6 +149,7 @@ export default function GameSearch() {
   };
 
   const handleSelectedSubmit = async (event) => {
+    const apiKey = 'abec424581074dfd9006811f98107886';
     event.preventDefault();
     console.log(selectedValues);
     // console.log(selectedValues.genre)
@@ -149,17 +160,35 @@ export default function GameSearch() {
       selectedValues.platform
     );
     console.log(selectedGameData);
-    const gameTitleArray = selectedGameData.games.map((game) => {
-      const gameTitle = game.title;
-      const gameDescription = game.description;
+
+    const games = selectedGameData.results;
+    const gameSlugTitles = games.map(game => game.slug) 
+
+    // Use the slug value to make a second API request to retrieve the full details of each game
+    const gameDetailsResponses = await Promise.all(
+      gameSlugTitles.map(slugTitle => fetch(`https://api.rawg.io/api/games/${slugTitle}?key=${apiKey}&fields=genres.name,platforms.platform.name`))
+    );
+
+    // Parse the JSON responses from the second API requests
+    const gameDetailsData = await Promise.all(
+      gameDetailsResponses.map(response => response.json())
+    );
+
+    console.log(gameDetailsData)
+
+    const gameTitleArray = gameDetailsData.map((game) => {
+      const gameTitle = game.name;
+      const gameDescription = game.description_raw;
       const gameGenre = game.genres;
-      const gameGenreArray = gameGenre.map((genre) => genre.genre_name);
-      const gameScore = game.moby_score;
+      // console.log(gameGenre)
+      const gameGenreArray = gameGenre.map((genre) => genre.name);
+      const gameScore = game.metacritic;
       const gamePlatforms = game.platforms;
+      // console.log(gamePlatforms)
       const platformNamesArray = gamePlatforms.map(
-        (platform) => platform.platform_name
+        (platform) => platform.platform.name
       );
-      const gameCover = game.sample_cover && game.sample_cover.image;
+      const gameCover = game.background_image;
 
       return {
         title: gameTitle,
@@ -169,43 +198,39 @@ export default function GameSearch() {
         platform: platformNamesArray,
         coverImg: gameCover,
       };
-    });
 
-    // Sort the gameTitleArray by score in descending order
-    gameTitleArray.sort((a, b) => b.score - a.score);
+    });
     
     setGameTitleData(gameTitleArray);
     //   setGameTitle("");
+    console.log(gameTitleArray)
   }
 
   const fetchPlatformGenreData = async (genre, platform) => {
-    const apiKey = 'moby_lNj1n04CgAI9jPfD6UCFtu6UKBF';
-    const encodedApiKey = encodeURIComponent(apiKey);
+    const apiKey = 'abec424581074dfd9006811f98107886';
 
     // get genre id from genreIds object
     const genreId = genreIds[genre]
-    const encodedGenreId = encodeURIComponent(genreId);
 
     // get platform id from platformIds object
     const platformId = platformIds[platform]
-    const encodedPlatformId = encodeURIComponent(platformId);
 
     try {
         if (genre === '' && platform) {
             // get games data from playform id passed in
-            const gamesPlatformResponse = await fetch(`https://api.mobygames.com/v1/games?platforms=${encodedPlatformId}&api_key=${encodedApiKey}`)
+            const gamesPlatformResponse = await fetch(`https://api.rawg.io/api/games?key=${apiKey}&platforms=${platformId}&ordering=-metacritic`)
             const gamePlatformData = await gamesPlatformResponse.json()
             // console.log(gamePlatformData)
             return gamePlatformData
         } else if (platform === '' && genre) {
             // get games data from genre id passed in
-            const gameGenreResponse = await fetch(`https://api.mobygames.com/v1/games?genre=${encodedGenreId}&api_key=${encodedApiKey}`)
+            const gameGenreResponse = await fetch(`https://api.rawg.io/api/games?key=${apiKey}&genres=${genreId}&ordering=-metacritic`)
             const gameGenreData = await gameGenreResponse.json()
             // console.log(gameGenreData)
             return gameGenreData
         } else {
             // get games data from platform and genre id's passed in
-            const gameResponse = await fetch(`https://api.mobygames.com/v1/games?genre=${encodedGenreId}&platforms=${encodedPlatformId}&api_key=${encodedApiKey}`)
+            const gameResponse = await fetch(`https://api.rawg.io/api/games?key=${apiKey}&genres=${genreId}&platforms=${platformId}&ordering=-metacritic`)
             const gameData = await gameResponse.json()
             // console.log(gameData)
             return gameData
@@ -327,22 +352,20 @@ export default function GameSearch() {
                           </MenuItem>
                           <MenuItem value={"Action"}>Action</MenuItem>
                           <MenuItem value={"Adventure"}>Adventure</MenuItem>
+                          <MenuItem value={"Arcade"}>Arcade</MenuItem>
+                          <MenuItem value={"Casual"}>Casual</MenuItem>
                           <MenuItem value={"Educational"}>Educational</MenuItem>
-                          <MenuItem value={"Gambling"}>Gambling</MenuItem>
+                          <MenuItem value={"Family"}>Family</MenuItem>
+                          <MenuItem value={"Fighting"}>Fighting</MenuItem>
+                          <MenuItem value={"Indie"}>Indie</MenuItem>
+                          <MenuItem value={"Massively Multiplayer"}>MMO</MenuItem>
                           <MenuItem value={"Puzzle"}>Puzzle</MenuItem>
-                          <MenuItem value={"Racing / Driving"}>
-                            Racing/Driving
-                          </MenuItem>
-                          <MenuItem value={"Role-playing (RPG)"}>
-                            Role-Playing (RPG)
-                          </MenuItem>
+                          <MenuItem value={"Racing"}>Racing</MenuItem>
+                          <MenuItem value={"RPG"}>RPG</MenuItem>
+                          <MenuItem value={"Shooter"}>Shooter</MenuItem>
                           <MenuItem value={"Simulation"}>Simulation</MenuItem>
                           <MenuItem value={"Sports"}>Sports</MenuItem>
                           <MenuItem value={"Strategy"}>Strategy</MenuItem>
-                          <MenuItem value={"1st-person"}>First Person</MenuItem>
-                          <MenuItem value={"3rd-person (Other)"}>
-                            Third Person
-                          </MenuItem>
                         </Select>
                       </FormControl>
                       <FormControl sx={{ m: 1, minWidth: 150 }}>
@@ -384,9 +407,6 @@ export default function GameSearch() {
                           <MenuItem value={"Nintendo Switch"}>
                             Nintendo Switch
                           </MenuItem>
-                          <MenuItem value={"Oculus Quest"}>
-                            Oculus Quest
-                          </MenuItem>
                           <MenuItem value={"Playstation"}>Playstation</MenuItem>
                           <MenuItem value={"Playstation 2"}>
                             Playstation 2
@@ -403,9 +423,9 @@ export default function GameSearch() {
                           <MenuItem value={"Xbox"}>Xbox</MenuItem>
                           <MenuItem value={"Xbox 360"}>Xbox 360</MenuItem>
                           <MenuItem value={"Xbox One"}>Xbox One</MenuItem>
-                          <MenuItem value={"Xbox Series"}>Xbox Series</MenuItem>
+                          <MenuItem value={"Xbox Series S|X"}>Xbox Series S|X</MenuItem>
                           <MenuItem value={"Windows"}>
-                            PC (Microsoft Windows)
+                            PC
                           </MenuItem>
                         </Select>
                       </FormControl>
@@ -414,6 +434,11 @@ export default function GameSearch() {
                       variant="contained"
                       type="submit"
                       className="search-selected-btn"
+                      sx={{
+                        margin: "auto",
+                        marginTop: 1,
+                        width: "fit-content"
+                      }}
                     >
                       Search
                     </Button>
@@ -423,7 +448,7 @@ export default function GameSearch() {
             </div>
             </div>
             <div className="search-card-container">
-              <Grid container spacing={6} justifyContent="center">
+              <Grid container spacing={6} justifyContent="center" gap='50px'>
                 {gameTitleData.map((gameData, index) => (
                   <Grid item key={index} sx={{ textAlign: "center" }}>
                     <GameCard gameTitleData={gameData} style={{ margin: "auto" }}/>
