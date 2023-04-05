@@ -13,6 +13,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import logo from '../images/game-logo.png'
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import AuthState from "./AuthState";
 import { auth } from '../firebase'
@@ -26,6 +27,9 @@ function ResponsiveAppBar() {
   const [authUser, setAuthUser] = useState('')
   const [firstNameInitial, setFirstNameInitial] = useState('');
   const [lastNameInitial, setLastNameInitial] = useState('');
+
+  const hideBox = useMediaQuery('(max-width:899px)');
+  // const hideBox = useMediaQuery('(max-width:899px)');
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -110,7 +114,7 @@ function ResponsiveAppBar() {
             <img
               src={logo}
               alt="My Logo"
-              style={{ marginRight: "2rem", height: "2.5rem" }}
+              style={{ height: "2.5rem" }}
             />
           </Typography>
 
@@ -191,7 +195,7 @@ function ResponsiveAppBar() {
             <img
               src={logo}
               alt="My Logo"
-              style={{ marginRight: "2rem", height: "2.5rem" }}
+              style={{ height: "2.5rem" }}
             />
           </Typography>
 
@@ -245,7 +249,7 @@ function ResponsiveAppBar() {
           </Box>
           ) : null }
 
-          <Box>
+          <Box hidden={hideBox}>
            <AuthState/>
           </Box>
           
@@ -253,7 +257,6 @@ function ResponsiveAppBar() {
             {authUser ? (
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
                 <Avatar sx={{ bgcolor: "#479acd" }}>{firstNameInitial}{lastNameInitial}</Avatar>
               </IconButton>
             </Tooltip>
