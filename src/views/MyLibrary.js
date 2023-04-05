@@ -1,12 +1,14 @@
-import {useState, useEffect} from 'react'
-import styles from './Library.modules.css';
+import {useState, useEffect, Component} from 'react'
+import './Library.modules.css';
 import '@fontsource/roboto/500.css';
 import steamLogo from '../images/steam-sprite.png'
 import epicLogo from '../images/epic-logo.png'
 import xboxLogo from '../images/xbox-logo.png'
 import psLogo from '../images/playstation-logo.png'
 
-// import { OpenIdClient } from 'openid'
+// import { useNavigate } from 'react-router-dom';
+
+
 
 export default function MyLibrary() {
 
@@ -28,38 +30,49 @@ export default function MyLibrary() {
 
 // ------------------ everything to handle steam logins -------------------------
 
+    const handleLogin = (anchorId, res) => {
+        if (anchorId === 'steam') {
 
+        } else if (anchorId === 'epic') {
 
+        } else if (anchorId === 'xbox') {
 
+        } else if (anchorId === 'ps') {
 
-    // const steamClient = new OpenIdClient({
-    //     providerUrl: 'https://steamcommunity.com/openid'
-    // })
+        }
+    }
 
-    // // button to handle steam login process
-    // const handleLogin = async (id) => {
-    //     console.log(id)
-    //     const returnUrl = `${window.location.origin}/login/steam/callback`;
-    //     const redirectUrl = steamClient.authorizationUrl({
-    //       redirect_uri: returnUrl,
-    //       scope: 'openid',
-    //       state: 'login',
-    //     });
-    //     window.location = redirectUrl;
+    // async function handleLogin(anchorId) {
+    //     try {
+    //     // initiate OpenID authentication flow with Steam
+    //     const response = await fetch('/auth/steam');
+    //     const data = await response.json();
+    
+    //     // redirect to Steam sign-in page
+    //     window.location.href = data.redirectUrl;
+    //     } catch (error) {
+    //     console.log(error);
+    //     }
+    // }
+
+    //     const navigate = useNavigate();
+    
+    //     // handle successful authentication and redirect to app
+    //     async function handleAuthentication() {
+    //     try {
+    //         // retrieve user data using SteamID
+    //         const response = await fetch('/api/profile');
+    //         const data = await response.json();
+    
+    //         // do something with user data
+    //         navigate.push('/dashboard');
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
     //   }
 
-    // // callback to handle steam response
-    // useEffect(() => {
-    //     const returnUrl = `${window.location.origin}/login/steam/callback`;
-    //     const params = steamClient.callbackParams();
-    //     steamClient.callback(returnUrl, params).then((claims) => {
-    //       // Handle successful login
-    //       console.log("Successfully logged into Steam")
-    //     }).catch((error) => {
-    //       // Handle login failure
-    //       console.log(error)
-    //     });
-    //   }, []);
+
+
 
 
   return (
@@ -127,12 +140,12 @@ export default function MyLibrary() {
                   .filter((anchor) => anchor.active)
                   .map((anchor) => (
                     <div className="library-logo-box active active-in-grid">
-                      <div href={`#${anchor.id}`}>
+                      <div className='library-anchor' href={`#${anchor.id}`}>
                         <img
                           className={`library-${anchor.id}-logo-img img-active-in-grid`}
                           src={anchor.logo}
                         />
-                        <button className='search-connect-btn'>Connect</button>
+                        <button className='library-connect-btn' onClick={() => handleLogin(anchor.id)}>Connect</button>
                       </div>
                     </div>
                   ))}
