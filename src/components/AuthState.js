@@ -6,8 +6,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 export default function AuthState() {
     const [authUser, setAuthUser] = useState('')
     const [firstName, setFirstName] = useState('')
-    const [firstNameInitial, setFirstNameInitial] = useState('');
-    const [lastNameInitial, setLastNameInitial] = useState('');
+
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
@@ -27,7 +26,7 @@ export default function AuthState() {
 
   return (
     <div className='auth-user-div'>
-        { authUser ? <><p>Hello, {firstName}</p></> : ""}
+        { authUser ? <><p className="auth-p-tag">Hello, {firstName}</p></> : ""}
         </div>
   )
 }
