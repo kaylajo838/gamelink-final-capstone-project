@@ -115,8 +115,8 @@
     text-align: center;
     box-shadow: 0 0 20px 30px black, inset 0 0 0 5px white;
     margin-top: 100px;
-    width: 150px;
-    height: 200px;
+    /* width: 150px;
+    height: 200px; */
 }
 
 .img-active-in-grid {
@@ -130,7 +130,7 @@
     gap: 100px;
 }
 
-.search-connect-btn {
+.library-connect-btn {
     margin-top: 15px;
     background-color: #761cbc;
     /* background-color: #8e3dc6; */
@@ -143,9 +143,15 @@
     transition: transform 0.3s ease-in-out;
 }
 
-.search-connect-btn:hover {
+.library-connect-btn:hover {
     background-color: #a35ad0;
     cursor: pointer;
     transform: scale(1.1);
     font-size: 16px;
+}
+
+.library-anchor {
+    width: 150px;
+    height: 200px;
+    
 }
