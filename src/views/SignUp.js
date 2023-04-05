@@ -18,6 +18,7 @@ import { createUserWithEmailAndPassword, updateProfile, fetchSignInMethodsForEma
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
 
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -60,7 +61,9 @@ export default function SignUp() {
       return;
     } else {
       setEmailExists(false)
-      navigate("/")
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     }
 
     createUserWithEmailAndPassword(auth, email, password)
