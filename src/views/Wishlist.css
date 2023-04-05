@@ -1,0 +1,73 @@
+.wishlist-main-body-container {
+    height: calc(100vh - 120.5px);
+    font-family: 'Roboto', sans-serif;
+}
+
+.wishlist-container {
+    margin:0;
+    max-height: calc(100vh - 120.5px);
+    width: 100vw;
+    overflow:hidden;
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: center;
+    background-image: url('../images/gaming-background.png'); 
+    /* background-image: url('./images/smaller-gaming-background3.png');  */
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-position:center center;
+    background-attachment: fixed;
+    /* height: 100vh; */
+    width: 100vw;
+    height: 100vh;
+}
+
+.wishlist-main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* height: 100%; */
+    /* min-height: 100vh; */
+    /* height: auto; */
+    width: 100vw;
+    overflow: auto;
+    padding-top: 30px;
+    padding-bottom: 50px;
+    max-height: calc(100vh - 120.5px);
+
+}
+
+.wishlist-header-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px;
+    background-color: #4c4c4b;
+    border: 5px solid #2ca627;
+    box-shadow: 0 0 20px 30px black, inset 0 0 0 5px white;
+    border-radius: 0.5em;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 25px;
+}
+
+.wishlist-h1 {
+    color: white;
+}
+
+.wishlist-card-container {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 50px;
+    padding-left: 50px;
+    /* overflow: hidden; */
+    width: fit-content;
+    /* gap: 20px; */
+}
