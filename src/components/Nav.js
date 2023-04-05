@@ -174,6 +174,16 @@ function ResponsiveAppBar() {
                   <Typography textAlign="center">My Library</Typography>
                 </Link>
               </MenuItem>
+
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Link
+                  to="/wishlist"
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <Typography textAlign="center">Wishlist</Typography>
+                </Link>
+              </MenuItem>
+
             </Menu>
           </Box>
           <Typography
@@ -224,6 +234,15 @@ function ResponsiveAppBar() {
               sx={{ my: 2, color: "white", display: "block" }}
             >
               My Library
+            </Button>
+
+            <Button
+              component={Link}
+              to="/wishlist"
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              Wishlist
             </Button>
           </Box>
           ) : null }
@@ -297,17 +316,6 @@ function ResponsiveAppBar() {
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
                   <Typography textAlign="center">Edit Profile</Typography>
-                </Link>
-              </MenuItem>
-              ) : null}
-
-              {authUser ? (
-              <MenuItem onClick={handleCloseNavMenu}>
-                <Link
-                  to="/wishlist"
-                  style={{ textDecoration: "none", color: "inherit" }}
-                >
-                  <Typography textAlign="center">My Wishlist</Typography>
                 </Link>
               </MenuItem>
               ) : null}
