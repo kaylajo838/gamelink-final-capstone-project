@@ -26,17 +26,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* height: 100%; */
-    min-height: 100vh;
-    /* height: auto; */
-    width: 100%;
+    width: 100vw;
     overflow: auto;
-    padding-top: 50px;
-    min-height: calc(100vh - 20px - /* height of navbar */ 60px - /* height of footer */ 50px);
-
+    padding-top: 30px;
+    padding-bottom: 50px;
+    max-height: calc(100vh - 120.5px);
 }
 
-.search-h1 {
+.library-h1 {
     margin-top: 0;
     margin-bottom: 20px;
 }
@@ -83,6 +80,7 @@
     text-align: center;
     box-shadow: 0 0 15px 20px black, inset 0 0 0 5px white;
     transition: transform 0.3s ease-in-out;
+    position: relative;
 }
 
 .library-logo-header {
@@ -91,9 +89,10 @@
 
 .library-logo-box:hover {
     transform: scale(1.1);
+    cursor: pointer;
   }
 
-.active{
+.active {
     box-shadow: 0 0 15px 20px #479acd, inset 0 0 0 5px #2ca627;
     transform: scale(1.1);
     border: 5px solid black;
@@ -114,9 +113,12 @@
     font-size: 20px;
     text-align: center;
     box-shadow: 0 0 20px 30px black, inset 0 0 0 5px white;
-    margin-top: 100px;
+    margin-top: 80px;
+    margin-bottom: 40px;
     /* width: 150px;
     height: 200px; */
+    height: fit-content;
+    position: relative;
 }
 
 .img-active-in-grid {
@@ -124,10 +126,24 @@
 }
 
 .active-container {
-    display: flex;
+    /* display: flex;
     flex-direction: row;
     justify-content: center;
     gap: 100px;
+    height: fit-content;
+    padding-bottom: 20px; */
+    /* margin-top: 180px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 50px;
+    padding-left: 50px;
+    /* overflow: hidden; */
+    width: fit-content;
+    gap: 100px;
+    /* position: relative; */
 }
 
 .library-connect-btn {
@@ -152,6 +168,79 @@
 
 .library-anchor {
     width: 150px;
-    height: 200px;
+    height: fit-content;
     
+}
+
+.library-steam-list {
+    font-size: 10px;
+    margin-top: 20px;
+}
+
+.library-game-list-main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    /* background: radial-gradient(white, #4c4c4b); */
+    background-color: #4c4c4b;
+    border: 5px solid #2ca627;
+    border-radius: 0.5em;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    text-align: center;
+    box-shadow: 0 0 20px 30px black, inset 0 0 0 5px white;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    /* width: 150px;
+    height: 200px; */
+    height: fit-content;
+    width: fit-content;
+}
+
+.library-h1-games {
+    text-decoration: underline;
+    text-underline-offset: 10px;
+    margin-bottom: 30px;
+} 
+
+.library-game-list-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 100px;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.library-game-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 200px;
+}
+
+.library-view-games-btn {
+    background-color: #761cbc;
+    /* background-color: #8e3dc6; */
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    border: 2px solid black;
+    border-radius: 0.5em;
+    padding: 5px 15px;
+    font-size: 15px;
+    transition: transform 0.3s ease-in-out;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 40px;
+}
+
+.library-games {
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
