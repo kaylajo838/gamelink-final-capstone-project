@@ -19,8 +19,10 @@ export default function GameSearch() {
     platform: ''
   })
   const [gameTitleData, setGameTitleData] = useState([])
+  const [titleExists, setTitleExists] = useState(false)
   const [isSearchSubmitted, setIsSearchSubmitted] = useState(false);
-
+  const [currentPage, setCurrentPage] = useState(1)
+ 
 // ------------ Section handling fetching to api when title is entered into form ------------ //
   
 
@@ -29,6 +31,7 @@ const handleTitleSubmit = async (event) => {
   // const data = await url.json()
   event.preventDefault();
   setGameTitleData([]);
+  setTitleExists(false)
   const apiKey = 'abec424581074dfd9006811f98107886'
   const title = gameTitle;
   const gameData = await fetchGameData(title, apiKey);
@@ -43,7 +46,11 @@ const handleTitleSubmit = async (event) => {
     (platform) => platform.platform.name
   );
   const gameCover = gameData.background_image
-
+  
+  const ratings = gameData.ratings.map((rating) => ({
+    title: rating.title,
+    count: rating.count
+  }))
 
   const gameTitleArray = [{
     title: gameDataTitle,
@@ -52,10 +59,12 @@ const handleTitleSubmit = async (event) => {
     score: gameScore,
     platform: platformNamesArray,
     coverImg: gameCover,
+    rating: ratings
   }];
   setGameTitleData(gameTitleArray);
   setGameTitle("");
   setIsSearchSubmitted(true);
+  setTitleExists(false)
 }
 
   // Remove previous search results from the DOM
@@ -79,9 +88,12 @@ const handleTitleSubmit = async (event) => {
       const response = await fetch(url);
       const data = await response.json();
       console.log(data)
+      setTitleExists(true)
       return data;
     } catch (error) {
       console.error(error);
+      setTitleExists(false)
+      // setGameTitleData([])
       return null;
     }
   }
@@ -149,6 +161,7 @@ const platformIds = {
   };
 
   const handleSelectedSubmit = async (event) => {
+    setTitleExists(false)
     const apiKey = 'abec424581074dfd9006811f98107886';
     event.preventDefault();
     console.log(selectedValues);
@@ -189,6 +202,10 @@ const platformIds = {
         (platform) => platform.platform.name
       );
       const gameCover = game.background_image;
+      const ratings = game.ratings.map((rating) => ({
+        title: rating.title,
+        count: rating.count
+      }))
 
       return {
         title: gameTitle,
@@ -197,6 +214,7 @@ const platformIds = {
         score: gameScore,
         platform: platformNamesArray,
         coverImg: gameCover,
+        rating: ratings
       };
 
     });
@@ -205,6 +223,7 @@ const platformIds = {
     //   setGameTitle("");
     console.log(gameTitleArray)
   }
+
 
   const fetchPlatformGenreData = async (genre, platform) => {
     const apiKey = 'abec424581074dfd9006811f98107886';
@@ -218,19 +237,19 @@ const platformIds = {
     try {
         if (genre === '' && platform) {
             // get games data from playform id passed in
-            const gamesPlatformResponse = await fetch(`https://api.rawg.io/api/games?key=${apiKey}&platforms=${platformId}&ordering=-metacritic`)
+            const gamesPlatformResponse = await fetch(`https://api.rawg.io/api/games?key=${apiKey}&platforms=${platformId}&ordering=-metacritic&page_size=40`)
             const gamePlatformData = await gamesPlatformResponse.json()
             // console.log(gamePlatformData)
             return gamePlatformData
         } else if (platform === '' && genre) {
             // get games data from genre id passed in
-            const gameGenreResponse = await fetch(`https://api.rawg.io/api/games?key=${apiKey}&genres=${genreId}&ordering=-metacritic`)
+            const gameGenreResponse = await fetch(`https://api.rawg.io/api/games?key=${apiKey}&genres=${genreId}&ordering=-metacritic&page_size=40`)
             const gameGenreData = await gameGenreResponse.json()
             // console.log(gameGenreData)
             return gameGenreData
         } else {
             // get games data from platform and genre id's passed in
-            const gameResponse = await fetch(`https://api.rawg.io/api/games?key=${apiKey}&genres=${genreId}&platforms=${platformId}&ordering=-metacritic`)
+            const gameResponse = await fetch(`https://api.rawg.io/api/games?key=${apiKey}&genres=${genreId}&platforms=${platformId}&ordering=-metacritic&page_size=40`)
             const gameData = await gameResponse.json()
             // console.log(gameData)
             return gameData
@@ -288,6 +307,13 @@ const platformIds = {
                     },
                   }}
                 />
+                {titleExists &&
+                <Grid container justifyContent="center" className='search-error'>
+                    <Grid item sx={{ color: "#ff2222", fontSize: "12px" }}>
+                    Game Doesn't Exist
+                    </Grid>
+                  </Grid>
+                }
                 <Button
                   variant="contained"
                   type="submit"
