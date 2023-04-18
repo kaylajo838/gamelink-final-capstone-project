@@ -53,6 +53,13 @@ body, html {
   margin: 0;
 }
 
+.footer-github-icon {
+  transition: transform 0.3s ease-in-out;
+}
+
+.footer-github-icon:hover {
+  transform: rotate(360deg) scale(1.2);
+}
 
 /* Media Queries */
 /* @media (max-width: 912px) {
