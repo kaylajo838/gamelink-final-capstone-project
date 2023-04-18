@@ -5,8 +5,6 @@ import GamepadTwoToneIcon from '@mui/icons-material/GamepadTwoTone';
 
 // image imports
 import logo from '../images/game-logo.png'
-import greenLogo from '../images/green-game-logo.png'
-import blueLogo from '../images/blue-game-logo.png'
 import steamLogo from '../images/steam-sprite.png'
 import epicLogo from '../images/epic-logo.png'
 import xboxLogo from '../images/xbox-logo.png'
@@ -20,8 +18,6 @@ export default function Home() {
         <div className="home-body-container">
           <div className="home-container">
             <img className="home-img" src={logo} />
-            {/* <img className="home-img" src={greenLogo} /> */}
-            {/* <img className="home-img" src={blueLogo} /> */}
             <p className="home-p">
               <span className="home-icon-span-start"><GamepadTwoToneIcon /></span>Welcome to the ultimate one-stop gaming page!<span className="home-icon-span-end"><GamepadTwoToneIcon /></span>
             </p>
