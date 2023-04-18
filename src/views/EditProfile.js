@@ -25,6 +25,7 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import Snackbar from '@mui/material/Snackbar';
 import { getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 
+
 export default function EditProfile() {
 
   const [email, setEmail] = useState('');
