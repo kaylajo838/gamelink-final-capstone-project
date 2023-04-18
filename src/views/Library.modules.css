@@ -17,7 +17,6 @@
     background-repeat:no-repeat;
     background-position:center center;
     background-attachment: fixed;
-    /* height: 100vh; */
     width: 100vw;
     height: 100vh;
 }
@@ -69,7 +68,6 @@
     justify-content: center;
     align-items: center;
     padding: 20px;
-    /* background: radial-gradient(white, #4c4c4b); */
     background-color: #4c4c4b;
     border: 5px solid #2ca627;
     border-radius: 0.5em;
@@ -104,7 +102,6 @@
     justify-content: center;
     align-items: center;
     padding: 20px;
-    /* background: radial-gradient(white, #4c4c4b); */
     background-color: #4c4c4b;
     border: 5px solid #2ca627;
     border-radius: 0.5em;
@@ -115,8 +112,6 @@
     box-shadow: 0 0 20px 30px black, inset 0 0 0 5px white;
     margin-top: 80px;
     margin-bottom: 40px;
-    /* width: 150px;
-    height: 200px; */
     height: fit-content;
     position: relative;
 }
@@ -126,13 +121,6 @@
 }
 
 .active-container {
-    /* display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 100px;
-    height: fit-content;
-    padding-bottom: 20px; */
-    /* margin-top: 180px; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -140,16 +128,13 @@
     margin-left: auto;
     padding-right: 50px;
     padding-left: 50px;
-    /* overflow: hidden; */
     width: fit-content;
     gap: 100px;
-    /* position: relative; */
 }
 
 .library-connect-btn {
     margin-top: 15px;
     background-color: #761cbc;
-    /* background-color: #8e3dc6; */
     color: white;
     font-family: 'Roboto', sans-serif;
     border: 2px solid black;
@@ -183,7 +168,6 @@
     justify-content: center;
     align-items: center;
     padding: 20px;
-    /* background: radial-gradient(white, #4c4c4b); */
     background-color: #4c4c4b;
     border: 5px solid #2ca627;
     border-radius: 0.5em;
@@ -194,8 +178,6 @@
     box-shadow: 0 0 20px 30px black, inset 0 0 0 5px white;
     margin-top: 40px;
     margin-bottom: 40px;
-    /* width: 150px;
-    height: 200px; */
     height: fit-content;
     width: fit-content;
 }
@@ -224,7 +206,6 @@
 
 .library-view-games-btn {
     background-color: #761cbc;
-    /* background-color: #8e3dc6; */
     color: white;
     font-family: 'Roboto', sans-serif;
     border: 2px solid black;
