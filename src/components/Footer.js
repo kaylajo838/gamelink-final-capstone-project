@@ -6,6 +6,7 @@ import Paper from "@mui/material/Paper";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 
+
 export default function GuestFooter() {
     return (
       <Paper sx={{
