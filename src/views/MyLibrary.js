@@ -8,6 +8,8 @@ import xboxLogo from '../images/xbox-logo.png'
 import psLogo from '../images/playstation-logo.png'
 import { db, auth } from '../firebase';
 import { doc, setDoc, deleteDoc, getDocs, collection } from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
+import queryString from 'query-string';
 
 
 export default function MyLibrary() {
@@ -19,7 +21,8 @@ export default function MyLibrary() {
     
     const [steamConnect, setSteamConnect] = useState(false)
     const [epicConnect, setEpicConnect] = useState(false)
-    
+
+    const [xuid, setXuid] = useState(null);
     const [platformData, setPlatformData] = useState([])
     const [anchors, setAnchors] = useState([
       { id: "steam", active: false, logo: steamLogo },
@@ -76,27 +79,41 @@ export default function MyLibrary() {
     };
 
 // ------------------- useEffect to find gaming platforms in database to display ---------------------------------
+    
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
-      const getPlatforms = async () => {
-        const subColRef = collection(db, "users", auth.currentUser.uid, "platforms");
-        const querySnapshot = await getDocs(subColRef);
-        const platformArray = querySnapshot.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.data().id
-        }));
-        setPlatformData(platformArray);
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
+        setUser(user);
+      });
 
-        // Update the active state of anchors based on the fetched data
-        setAnchors((prevState) =>
-          prevState.map((anchor) => ({
-            ...anchor,
-            active: platformArray.some((platform) => platform.id === anchor.id)
-          }))
-        );
+      return () => {
+        unsubscribe();
       };
-      getPlatforms();
-    }, []);
+    }, [auth]);
+
+    useEffect(() => {
+      if (user) {
+        const getPlatforms = async () => {
+          const subColRef = collection(db, "users", user.uid, "platforms");
+          const querySnapshot = await getDocs(subColRef);
+          const platformArray = querySnapshot.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.data().id
+          }));
+          setPlatformData(platformArray);
+    
+          // Update the active state of anchors based on the fetched data
+          setAnchors((prevState) =>
+            prevState.map((anchor) => ({
+              ...anchor,
+              active: platformArray.some((platform) => platform.id === anchor.id)
+            }))
+          );
+        };
+        getPlatforms();
+      }
+    }, [user]);
 
 // ------------------ everything to login -------------------------
 
@@ -116,7 +133,13 @@ const handleLogin = async (anchorId) => {
 
   } else if (anchorId === "xbox") {
     // handle Xbox login
-    
+    // const xboxUrl = `https://login.live.com/oauth20_authorize.srf?client_id=${clientId}&scope=XboxLive.signin&response_type=token&redirect_uri=${redirectUri}&display=popup`
+    const clientId = "599671a2-240a-4956-aecd-edb5af7f55d2"
+    const redirectUri = "http://localhost:3000/my-library"
+    const xboxUrl = `https://login.live.com/oauth20_authorize.srf?client_id=${clientId}&scope=XboxLive.signin%20XboxLive.offline_access&response_type=code&redirect_uri=${redirectUri}`;
+    window.location.replace(xboxUrl);
+    // handleXboxLogin();
+
   } else if (anchorId === "ps") {
     // handle PlayStation login
   }
@@ -151,32 +174,32 @@ const handleLogin = async (anchorId) => {
 
   // This funciton handles the Epic login callback
   const handleEpicLogin = async () => {
-    const clientId = "xyza7891rVxxPadunvcYDPG199ZYFzu4";
-    const clientSecret = "T8BGgvAoPPVNAIjHIccAMKV/5ndZJzuM+bgcz4vPxmg";
-    const redirectUri = "http://localhost:3000/my-library";
-    const code = new URLSearchParams(window.location.search).get("code");
+    // const clientId = "xyza7891rVxxPadunvcYDPG199ZYFzu4";
+    // const clientSecret = "T8BGgvAoPPVNAIjHIccAMKV/5ndZJzuM+bgcz4vPxmg";
+    // const redirectUri = "http://localhost:3000/my-library";
+    // const code = new URLSearchParams(window.location.search).get("code");
   
-    // Proxy server endpoint
-    const proxyEndpoint = "https://proxy.cors.sh/";
-    // const proxyEndpoint = "https://gobetween.oklabs.org/pipe/";
-    // const proxyEndpoint = "http://alloworigin.com/get?url=";
-    const tokenEndpoint = `${proxyEndpoint}https://api.epicgames.dev/auth/v1/oauth/token`;
+    // // Proxy server endpoint
+    // const proxyEndpoint = "https://proxy.cors.sh/";
+    // // const proxyEndpoint = "https://gobetween.oklabs.org/pipe/";
+    // // const proxyEndpoint = "http://alloworigin.com/get?url=";
+    // const tokenEndpoint = `${proxyEndpoint}https://api.epicgames.dev/auth/v1/oauth/token`;
   
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Authorization: `Basic ${btoa(`${clientId}:${clientSecret}`)}`,
-      },
-      body: new URLSearchParams({
-        grant_type: "client_credentials",
-        client_id: clientId,
-        redirect_uri: redirectUri,
-        code: code,
-      }),
-    };
-    console.log(tokenEndpoint)
-    console.log(requestOptions)
+    // const requestOptions = {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/x-www-form-urlencoded",
+    //     Authorization: `Basic ${btoa(`${clientId}:${clientSecret}`)}`,
+    //   },
+    //   body: new URLSearchParams({
+    //     grant_type: "client_credentials",
+    //     client_id: clientId,
+    //     redirect_uri: redirectUri,
+    //     code: code,
+    //   }),
+    // };
+    // console.log(tokenEndpoint)
+    // console.log(requestOptions)
     // fetch(tokenEndpoint, requestOptions)
     //   .then((response) => response.json())
     //   .then((data) => console.log(data))
@@ -189,6 +212,10 @@ const handleLogin = async (anchorId) => {
     handleSteamLogin();
   } else if (window.location.search.includes("code")) {
     handleEpicLogin();
+  } else if (window.location.search.includes("access_token")) {
+    const code = new URLSearchParams(window.location.search).get("access_token")
+    console.log(code)
+    // handleXboxLogin();
   }
 
   // Check for the presence of the steamid cookie on subsequent requests
@@ -280,14 +307,14 @@ const handleLogin = async (anchorId) => {
                     buttonContent = "Connected";
                   } else if (platform.id === "epic") {
                     buttonContent = "Coming Soon";
-                  } else if (platform.id === "xbox" && xboxGames.length > 0) {
-                    buttonContent = "Connected";
+                  } else if (platform.id === "xbox") {
+                    buttonContent = "Coming Soon";
                   } else if (platform.id === "ps") {
                     buttonContent = "Coming Soon";
                   }
 
                   let pointerEvents =
-                    (platform.id === "epic" || platform.id === "ps") ? "none" : "auto";
+                    (platform.id === "epic" || platform.id === "xbox" || platform.id === "ps") ? "none" : "auto";
 
                   return (
                     <Grid item key={index} sx={{ textAlign: "center" }}>
@@ -316,94 +343,7 @@ const handleLogin = async (anchorId) => {
               })}
             </Grid>
           </div>
-          {/* <div className="active-container">
-            <Grid container spacing={6} justifyContent="center" gap="50px">
-            {Object.values(platformData).map((platform, index) => {
-                // console.log(anchor.id)
-                // console.log(platform.logo)
-                let buttonContent = "Connect";
 
-                if (platform.id === "steam" && steamGames.length > 0) {
-                  buttonContent = "Connected";
-                } else if (platform.id === "epic") {
-                  buttonContent = "Coming Soon";
-                } else if (platform.id === "xbox" && xboxGames.length > 0) {
-                  buttonContent = "Connected";
-                } else if (platform.id === "ps") {
-                  buttonContent = "Coming Soon";
-                }
-
-                let pointerEvents =
-                (platform.id === "epic" || platform.id === "ps") ? "none" : "auto";
-
-                return (
-                  <Grid item key={index} sx={{ textAlign: "center" }}>
-                    <div
-                      className="library-logo-box active active-in-grid"
-                      key={platform.id}
-                    >
-                      <div className="library-anchor" href={`${platform.id}`}>
-                        <img
-                          className={`library-${platform.id}-logo-img img-active-in-grid`}
-                          src={platform.logo}
-                        />
-                        <button
-                          className="library-connect-btn"
-                          onClick={() => handleLogin(platform.id)}
-                          style={{ pointerEvents: pointerEvents }}
-                        >
-                          {buttonContent}
-                        </button>
-                      </div>
-                    </div>
-                  </Grid>
-                );
-              })}
-            </Grid>
-          </div> */}
-          {/* <div className="active-container">
-            <Grid container spacing={6} justifyContent="center" gap="50px">
-              {anchors.filter((anchor) => anchor.active).map((anchor, index) => {
-                let buttonContent = "Connect";
-
-                if (anchor.id === "steam" && steamGames.length > 0) {
-                  buttonContent = "Connected";
-                } else if (anchor.id === "epic") {
-                  buttonContent = "Coming Soon";
-                } else if (anchor.id === "xbox" && xboxGames.length > 0) {
-                  buttonContent = "Connected";
-                } else if (anchor.id === "ps") {
-                  buttonContent = "Coming Soon";
-                }
-
-                let pointerEvents =
-                (anchor.id === "epic" || anchor.id === "ps") ? "none" : "auto";
-
-                return (
-                  <Grid item key={index} sx={{ textAlign: "center" }}>
-                    <div
-                      className="library-logo-box active active-in-grid"
-                      key={anchor.id}
-                    >
-                      <div className="library-anchor" href={`${anchor.id}`}>
-                        <img
-                          className={`library-${anchor.id}-logo-img img-active-in-grid`}
-                          src={anchor.logo}
-                        />
-                        <button
-                          className="library-connect-btn"
-                          onClick={() => handleLogin(anchor.id)}
-                          style={{ pointerEvents: pointerEvents }}
-                        >
-                          {buttonContent}
-                        </button>
-                      </div>
-                    </div>
-                  </Grid>
-                );
-              })}
-            </Grid>
-          </div> */}
 
           <div className="library-game-list-main-container">
             <h1 className="library-h1-games">Games</h1>
@@ -429,7 +369,7 @@ const handleLogin = async (anchorId) => {
                 </div>
               </div>
 
-              <div className="library-game-container">
+              {/* <div className="library-game-container">
                 <div className="library-epic-header">
                   <h1 className="library-h1-games">Epic</h1>
                 </div>
@@ -463,7 +403,7 @@ const handleLogin = async (anchorId) => {
                 >
                   Coming Soon
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
