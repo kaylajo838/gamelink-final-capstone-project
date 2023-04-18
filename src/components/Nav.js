@@ -14,12 +14,13 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import logo from '../images/game-logo.png'
 import useMediaQuery from '@mui/material/useMediaQuery';
-
 import AuthState from "./AuthState";
 import { auth } from '../firebase'
 import { signOut } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth'
+import { getStorage, ref, getDownloadURL } from 'firebase/storage';
+
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -27,9 +28,10 @@ function ResponsiveAppBar() {
   const [authUser, setAuthUser] = useState('')
   const [firstNameInitial, setFirstNameInitial] = useState('');
   const [lastNameInitial, setLastNameInitial] = useState('');
+  const [avatarUrl, setAvatarUrl] = useState('')
 
   const hideBox = useMediaQuery('(max-width:899px)');
-  // const hideBox = useMediaQuery('(max-width:899px)');
+
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -59,26 +61,41 @@ function ResponsiveAppBar() {
         });
     }
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    useEffect(() => {
+      const unsubscribe = onAuthStateChanged(auth, async (user) => {
         if (user) {
-          setAuthUser(user)
-          console.log(user)
-          let splitUserName = user.displayName.split(' ')
+          setAuthUser(user);
+    
+          let splitUserName = user.displayName.split(' ');
           let firstName = splitUserName[0];
           let lastName = splitUserName[1];
           setFirstNameInitial(firstName ? firstName[0] : '');
           setLastNameInitial(lastName ? lastName[0] : '');
+    
+          // Fetch the image URL from Firebase Storage
+          const storage = getStorage();
+          const avatarRef = ref(storage, 'avatars/' + user.uid);
+    
+          try {
+            const avatarUrl = await getDownloadURL(avatarRef);
+            setAvatarUrl(avatarUrl);
+          } catch (error) {
+            // Handle the case when the image is not found
+            console.error('Error fetching avatar image:', error.message);
+            setAvatarUrl('');
+          }
         } else {
-          setAuthUser('')
+          setAuthUser('');
           setFirstNameInitial('');
           setLastNameInitial('');
+          setAvatarUrl('');
         }
-      }, [authUser]);
-  });
-
-  
-
+      });
+    
+      return () => {
+        unsubscribe();
+      };
+    }, [auth]); 
   
 
   return (
@@ -273,12 +290,14 @@ function ResponsiveAppBar() {
           </Box>
           
           <Box sx={{ flexGrow: 0 }}>
-            {authUser ? (
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar sx={{ bgcolor: "#479acd" }}>{firstNameInitial}{lastNameInitial}</Avatar>
-              </IconButton>
-            </Tooltip>
+          {authUser ? (
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar sx={{ bgcolor: "#479acd" }} src={avatarUrl}>
+                    {!avatarUrl && `${firstNameInitial}${lastNameInitial}`}
+                  </Avatar>
+                </IconButton>
+              </Tooltip>
             ) : null}
 
             <Menu
@@ -298,7 +317,7 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
 
-              {authUser ? (
+              {/* {authUser ? (
               <MenuItem onClick={handleCloseNavMenu}>
                 <Link
                   to="/profile"
@@ -307,7 +326,7 @@ function ResponsiveAppBar() {
                   <Typography textAlign="center">Profile</Typography>
                 </Link>
               </MenuItem>
-              ) : null}
+              ) : null} */}
 
               {authUser ? (
               <MenuItem onClick={handleCloseNavMenu}>
