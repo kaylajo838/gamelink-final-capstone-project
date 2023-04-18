@@ -17,7 +17,6 @@
     background-repeat:no-repeat;
     background-position:center center;
     background-attachment: fixed;
-    /* height: 100vh; */
     width: 100vw;
     height: 100vh;
 }
@@ -33,11 +32,9 @@
     max-width: 100%;
     height: auto;
     margin: 0;
-    /* margin-top: -200px; */
     padding: 20px;
     color: white;
     font-family: 'Roboto', sans-serif;
-    /* font-size: 20px; */
     font-size: 16px;
     text-align: center;
     box-shadow: 0 0 30px 40px black, inset 0 0 0 5px white;
