@@ -25,7 +25,6 @@ export default function GameSearch() {
  
 // ------------ Section handling fetching to api when title is entered into form ------------ //
   
-
 const handleTitleSubmit = async (event) => {
   // const url = await fetch(`https://api.rawg.io/api/games/assassins-creed-valhalla?key=${apiKey}`)
   // const data = await url.json()
@@ -74,7 +73,6 @@ const handleTitleSubmit = async (event) => {
   };
 
   useEffect(() => {
-    // Cleanup the DOM on component unmount
     return () => cleanup();
   }, []);
 
@@ -93,7 +91,6 @@ const handleTitleSubmit = async (event) => {
     } catch (error) {
       console.error(error);
       setTitleExists(false)
-      // setGameTitleData([])
       return null;
     }
   }
@@ -165,8 +162,6 @@ const platformIds = {
     const apiKey = 'abec424581074dfd9006811f98107886';
     event.preventDefault();
     console.log(selectedValues);
-    // console.log(selectedValues.genre)
-    // console.log(selectedValues.platform)
 
     const selectedGameData = await fetchPlatformGenreData(
       selectedValues.genre,
@@ -193,11 +188,9 @@ const platformIds = {
       const gameTitle = game.name;
       const gameDescription = game.description_raw;
       const gameGenre = game.genres;
-      // console.log(gameGenre)
       const gameGenreArray = gameGenre.map((genre) => genre.name);
       const gameScore = game.metacritic;
       const gamePlatforms = game.platforms;
-      // console.log(gamePlatforms)
       const platformNamesArray = gamePlatforms.map(
         (platform) => platform.platform.name
       );
@@ -220,7 +213,6 @@ const platformIds = {
     });
     
     setGameTitleData(gameTitleArray);
-    //   setGameTitle("");
     console.log(gameTitleArray)
   }
 
