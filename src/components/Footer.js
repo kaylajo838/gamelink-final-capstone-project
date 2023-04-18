@@ -3,6 +3,8 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 
 export default function GuestFooter() {
     return (
@@ -35,6 +37,9 @@ export default function GuestFooter() {
             <Typography variant="caption" color="initial">
               Copyright ©Kayla Imming 2023
             </Typography>
+            <a href="https://github.com/kaylajo838" className="footer-github-icon" target="_blank" rel="noopener noreferrer" style={{ marginLeft: "8px", display: "flex", justifyContent: "center", alignItems: "center", color: "black" }}>
+              <FontAwesomeIcon icon={faGithub} />
+            </a>
           </Box>
         </Container>
       </Paper>
