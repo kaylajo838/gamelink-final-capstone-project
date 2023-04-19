@@ -9,6 +9,7 @@ import SignUp from './views/SignUp';
 import SignIn from './views/SignIn';
 import Wishlist from './views/Wishlist';
 import EditProfile from './views/EditProfile';
+import Profile from './views/Profile';
 
 
 
@@ -21,12 +22,13 @@ function App() {
 
           <Routes>
           <Route path="/" element={<Home/>}/>
-          <Route path='/game-search' element={<GameSearch/>}/>
-          <Route path="/my-library" element={<MyLibrary/>}/>
-          <Route path="/sign-up" element={<SignUp/>}/>
-          <Route path="/sign-in" element={<SignIn/>}/>
+          <Route path='/game-search' element={<GameSearch />}/>
+          <Route path="/my-library" element={<MyLibrary />}/>
+          <Route path="/sign-up" element={<SignUp />}/>
+          <Route path="/sign-in" element={<SignIn />}/>
           <Route path='/wishlist' element={<Wishlist />}/>
-          <Route path='/edit-profile' element={<EditProfile/>}/>
+          <Route path='/edit-profile' element={<EditProfile />}/>
+          <Route path='/profile' element={<Profile />}/>
           </Routes>
 
           <Footer/>
