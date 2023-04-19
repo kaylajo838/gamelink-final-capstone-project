@@ -334,7 +334,7 @@ export default function EditProfile() {
                         Upload Profile Image
                         <input hidden accept="image/*" multiple type="file" onChange={handleImageChange} />
                     </Button>
-                    <Avatar alt="Remy Sharp" src={imageUrl} sx={{marginTop: "20px"}}/>
+                    <Avatar alt="Remy Sharp" src={imageUrl} sx={{marginTop: "20px", height: "80px", width: "80px", border: "2px solid black"}}/>
                     
                     </Grid>
                   </Grid>
