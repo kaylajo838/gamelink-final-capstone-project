@@ -162,6 +162,25 @@
   margin-left: 60px;
 }
 
-/* .image-list-item img {
-  background-color: white !important;
-} */
+::-webkit-scrollbar {
+  width: 20px;
+  background-color: #4c4c4b;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  /* border-radius: 0.5em; */
+}
+ 
+::-webkit-scrollbar-thumb {
+  /* background-color: #479acd; */
+  background: #a35ad0;
+  /* background-color: #8e3dc6;  */
+  /* border-radius: 0.5em; */
+  /* border: 1px solid black; */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  /* background: #a35ad0;  */
+  background-color: #8e3dc6;
+}
