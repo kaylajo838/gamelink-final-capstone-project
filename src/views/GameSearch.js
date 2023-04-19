@@ -136,14 +136,6 @@ const platformIds = {
   "Windows": 4
 }
 
-// const testapi = async () => {
-//   const apiKey = 'abec424581074dfd9006811f98107886'
-//   const url = await fetch(`https://api.rawg.io/api/genres?key=${apiKey}`)
-//   const data = await url.json()
-//   console.log(data.results)
-// }
-// testapi()
-
 
   const handleGenreChange = (event) => {
     // event.preventDefault();
