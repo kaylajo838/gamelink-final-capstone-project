@@ -22,7 +22,7 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="https://github.com/kaylajo838">
         Kayla Imming
       </Link>{' '}
       {new Date().getFullYear()}
@@ -32,10 +32,11 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignUp() {
+export default function SignIn() {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [errorMessage, setErrorMessage] = useState('');
 
   const navigate = useNavigate()
 
@@ -52,10 +53,17 @@ export default function SignUp() {
         // Signed in 
         const user = userCredential.user;
         navigate('/')
+        setErrorMessage('');
     })
     .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+
+        if (errorCode === 'auth/invalid-email' || errorCode === 'auth/wrong-password' || errorCode === 'auth/user-not-found') {
+          setErrorMessage('Invalid email or password. Please try again.');
+        } else {
+          setErrorMessage(errorMessage);
+        }
     });
   };
 
@@ -137,6 +145,13 @@ export default function SignUp() {
                           }}
                       />
                     </Grid>
+                  </Grid>
+                  <Grid container justifyContent="center">
+                    {errorMessage && (
+                      <Grid item sx={{ color: "red", fontSize: "15px", mb: 0, mt: 1 }}>
+                        {errorMessage}
+                      </Grid>
+                    )}
                   </Grid>
                   <Button
                     type="submit"
