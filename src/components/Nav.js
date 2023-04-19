@@ -71,8 +71,7 @@ function ResponsiveAppBar() {
           let lastName = splitUserName[1];
           setFirstNameInitial(firstName ? firstName[0] : '');
           setLastNameInitial(lastName ? lastName[0] : '');
-    
-          // Fetch the image URL from Firebase Storage
+
           const storage = getStorage();
           const avatarRef = ref(storage, 'avatars/' + user.uid);
     
@@ -80,7 +79,6 @@ function ResponsiveAppBar() {
             const avatarUrl = await getDownloadURL(avatarRef);
             setAvatarUrl(avatarUrl);
           } catch (error) {
-            // Handle the case when the image is not found
             console.error('Error fetching avatar image:', error.message);
             setAvatarUrl('');
           }
@@ -293,7 +291,7 @@ function ResponsiveAppBar() {
           {authUser ? (
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar sx={{ bgcolor: "#479acd" }} src={avatarUrl}>
+                  <Avatar sx={{ bgcolor: "#479acd", border: "1px solid black" }} src={avatarUrl}>
                     {!avatarUrl && `${firstNameInitial}${lastNameInitial}`}
                   </Avatar>
                 </IconButton>
@@ -317,7 +315,7 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
 
-              {/* {authUser ? (
+              {authUser ? (
               <MenuItem onClick={handleCloseNavMenu}>
                 <Link
                   to="/profile"
@@ -326,7 +324,7 @@ function ResponsiveAppBar() {
                   <Typography textAlign="center">Profile</Typography>
                 </Link>
               </MenuItem>
-              ) : null} */}
+              ) : null}
 
               {authUser ? (
               <MenuItem onClick={handleCloseNavMenu}>
