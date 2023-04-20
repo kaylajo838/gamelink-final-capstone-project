@@ -1,26 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import "./EditProfile.css"
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { auth, db } from '../firebase'
+import { auth } from '../firebase'
 import { updatePassword, updateProfile, updateEmail, getAuth, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
-import { doc, setDoc } from "firebase/firestore";
-import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
-import IconButton from '@mui/material/IconButton';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
 // import Avatar from '@mui/material/Avatar';
 import Snackbar from '@mui/material/Snackbar';
 import { getStorage, ref, uploadBytesResumable } from 'firebase/storage';
@@ -127,14 +119,12 @@ export default function EditProfile() {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
   
-      // Show the image preview
       const reader = new FileReader();
       reader.onload = (e) => {
         setImageUrl(e.target.result);
       };
       reader.readAsDataURL(file);
   
-      // Upload the image to Firebase Storage
       const storage = getStorage();
       const storageRef = ref(storage, 'avatars/' + auth.currentUser.uid);
   
@@ -147,7 +137,6 @@ export default function EditProfile() {
           console.error('Error uploading image:', error.message);
         },
         async () => {
-          // Handle successful uploads on complete
           const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
           setImageUrl(downloadURL);
   
