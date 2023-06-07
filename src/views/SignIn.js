@@ -22,7 +22,7 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://github.com/kaylajo838">
+      <Link  href="https://github.com/kaylajo838" sx={{ color: "white", textDecoration: "underline", "&:hover": {color: "#2ca627"}}}>
         Kayla Imming
       </Link>{' '}
       {new Date().getFullYear()}
@@ -71,7 +71,7 @@ export default function SignIn() {
   return (
     <div className="signup-main-body-container">
       <div className="signup-container">
-        <div className='signup-form-container'>
+        <div className="signup-form-container">
           <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
               <CssBaseline />
@@ -104,20 +104,25 @@ export default function SignIn() {
                         label="Email Address"
                         name="email"
                         autoComplete="email"
-                        onChange={(event) => {setEmail(event.target.value)}}
+                        onChange={(event) => {
+                          setEmail(event.target.value);
+                        }}
                         sx={{
-                            input: { color: "white" },
-                            fieldset: { borderColor: "#2ca627", borderWidth: "2px" },
-                            "& .MuiOutlinedInput-root": {
-                              "&:hover fieldset": {
-                                borderColor: "#2ca627",
-                              },
+                          input: { color: "white" },
+                          fieldset: {
+                            borderColor: "#2ca627",
+                            borderWidth: "2px",
+                          },
+                          "& .MuiOutlinedInput-root": {
+                            "&:hover fieldset": {
+                              borderColor: "#2ca627",
                             },
-                            "& label": {
-                              color: "#2ca627",
-                              fontWeight: 500
-                            },
-                          }}
+                          },
+                          "& label": {
+                            color: "#2ca627",
+                            fontWeight: 500,
+                          },
+                        }}
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -129,26 +134,34 @@ export default function SignIn() {
                         type="password"
                         id="password"
                         autoComplete="new-password"
-                        onChange={(event) => {setPassword(event.target.value)}}
+                        onChange={(event) => {
+                          setPassword(event.target.value);
+                        }}
                         sx={{
-                            input: { color: "white" },
-                            fieldset: { borderColor: "#2ca627", borderWidth: "2px" },
-                            "& .MuiOutlinedInput-root": {
-                              "&:hover fieldset": {
-                                borderColor: "#2ca627",
-                              },
+                          input: { color: "white" },
+                          fieldset: {
+                            borderColor: "#2ca627",
+                            borderWidth: "2px",
+                          },
+                          "& .MuiOutlinedInput-root": {
+                            "&:hover fieldset": {
+                              borderColor: "#2ca627",
                             },
-                            "& label": {
-                              color: "#2ca627",
-                              fontWeight: 500
-                            },
-                          }}
+                          },
+                          "& label": {
+                            color: "#2ca627",
+                            fontWeight: 500,
+                          },
+                        }}
                       />
                     </Grid>
                   </Grid>
                   <Grid container justifyContent="center">
                     {errorMessage && (
-                      <Grid item sx={{ color: "red", fontSize: "15px", mb: 0, mt: 1 }}>
+                      <Grid
+                        item
+                        sx={{ color: "red", fontSize: "15px", mb: 0, mt: 1 }}
+                      >
                         {errorMessage}
                       </Grid>
                     )}
@@ -163,6 +176,15 @@ export default function SignIn() {
                   </Button>
                 </Box>
               </Box>
+              <Typography
+                component="h1"
+                variant="h5"
+                sx={{
+                  fontSize: 16,
+                }}
+              >
+                Don't have an account? Sign up <Link href="/sign-up" sx={{ color: "white", textDecoration: "underline", "&:hover": {color: "#2ca627"}}}>here</Link>.
+              </Typography>
               <Copyright sx={{ mt: 2, color: "white" }} />
             </Container>
           </ThemeProvider>
