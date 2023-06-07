@@ -68,3 +68,38 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+
+
+
+<!-- In App.js -->
+<!-- import React from 'react';
+import { render } from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { OidcProvider } from '@axa-fr/react-oidc';
+import Header from './Layout/Header';
+import Routes from './Router';
+
+// This configuration use the ServiceWorker mode only
+// "access_token" will be provided automaticaly to the urls and domains configured inside "OidcTrustedDomains.js"
+const configuration = {
+  client_id: 'interactive.public.short',
+  redirect_uri: window.location.origin + '/authentication/callback',
+  silent_redirect_uri: window.location.origin + '/authentication/silent-callback', // Optional activate silent-signin that use cookies between OIDC server and client javascript to restore the session
+  scope: 'openid profile email api offline_access',
+  authority: 'https://demo.duendesoftware.com',
+  service_worker_relative_url:'/OidcServiceWorker.js',
+  service_worker_only:true,
+};
+
+const App = () => (
+  <OidcProvider configuration={configuration} >
+  <Router>
+    <Header />
+    <Routes />
+  </Router>
+  </OidcProvider>
+);
+
+render(<App />, document.getElementById('root')); -->

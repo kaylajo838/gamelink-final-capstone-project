@@ -1,4 +1,6 @@
-import { useState, useEffect, useNavigate } from 'react'
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
+
 import "./Profile.css"
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';

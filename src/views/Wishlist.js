@@ -1,4 +1,6 @@
-import {useState, useEffect, useNavigate } from 'react'
+import {useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
+
 import './Wishlist.css';
 import '@fontsource/roboto/500.css';
 import Grid from '@mui/material/Grid';

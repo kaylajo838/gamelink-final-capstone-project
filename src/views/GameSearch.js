@@ -1,4 +1,6 @@
-import { useState, useEffect, useNavigate } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import './Search.css';
 import '@fontsource/roboto/500.css';
 import Box from '@mui/material/Box';

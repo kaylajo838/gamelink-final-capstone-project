@@ -1,4 +1,6 @@
-import { useState, useNavigate, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import "./EditProfile.css"
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
