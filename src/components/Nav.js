@@ -93,7 +93,7 @@ function ResponsiveAppBar() {
       return () => {
         unsubscribe();
       };
-    }, [auth]); 
+    }, []); 
   
 
   return (
