@@ -327,13 +327,13 @@ const handleLogin = async (anchorId) => {
                             className={`library-${platform.id}-logo-img img-active-in-grid`}
                             src={platform.logo}
                           />
-                          <button
+                          {/* <button
                             className="library-connect-btn"
                             onClick={() => handleLogin(platform.id)}
                             style={{ pointerEvents: pointerEvents }}
                           >
                             {buttonContent}
-                          </button>
+                          </button> */}
                         </div>
                       </div>
                     </Grid>
@@ -344,7 +344,7 @@ const handleLogin = async (anchorId) => {
             </Grid>
           </div>
 
-
+{/* 
           <div className="library-game-list-main-container">
             <h1 className="library-h1-games">Games</h1>
 
@@ -367,7 +367,7 @@ const handleLogin = async (anchorId) => {
                     </>
                   ))}
                 </div>
-              </div>
+              </div> */}
 
               {/* <div className="library-game-container">
                 <div className="library-epic-header">
@@ -404,8 +404,8 @@ const handleLogin = async (anchorId) => {
                   Coming Soon
                 </button>
               </div> */}
-            </div>
-          </div>
+            {/* </div>
+          </div> */}
         </div>
       </div>
     </div>
