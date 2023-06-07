@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useNavigate } from 'react'
 import "./Profile.css"
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
@@ -10,6 +10,23 @@ import { db, auth } from "../firebase";
 import { onSnapshot } from 'firebase/firestore';
 
 export default function Profile() {
+
+  const [currentUser, setCurrentUser] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        setCurrentUser(user);
+      } else {
+        navigate('/sign-in');
+      }
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, [navigate]);
+
     const [authUser, setAuthUser] = useState('')
     const [firstNameInitial, setFirstNameInitial] = useState('');
     const [lastNameInitial, setLastNameInitial] = useState('');

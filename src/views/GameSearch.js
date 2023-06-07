@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useNavigate } from 'react';
 import './Search.css';
 import '@fontsource/roboto/500.css';
 import Box from '@mui/material/Box';
@@ -11,8 +11,27 @@ import Button from '@mui/material/Button';
 import GameCard from '../components/GameCard'
 import Grid from '@mui/material/Grid';
 
+import { auth } from '../firebase';
+
 
 export default function GameSearch() {
+
+  const [currentUser, setCurrentUser] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        setCurrentUser(user);
+      } else {
+        navigate('/sign-in');
+      }
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, [navigate]);
+
   const [gameTitle, setGameTitle] = useState("");
   const [selectedValues, setSelectedValues] = useState({
     genre: '',

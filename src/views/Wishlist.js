@@ -1,4 +1,4 @@
-import {useState, useEffect } from 'react'
+import {useState, useEffect, useNavigate } from 'react'
 import './Wishlist.css';
 import '@fontsource/roboto/500.css';
 import Grid from '@mui/material/Grid';
@@ -60,6 +60,23 @@ BootstrapDialogTitle.propTypes = {
 
 
 export default function Wishlist() {
+
+  const [currentUser, setCurrentUser] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        setCurrentUser(user);
+      } else {
+        navigate('/sign-in');
+      }
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, [navigate]);
+
   const [gameData, setGameData] = useState([]);
   const [open, setOpen] = useState(false);
   const [selectedGame, setSelectedGame] = useState(null);

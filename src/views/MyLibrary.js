@@ -11,8 +11,26 @@ import { doc, setDoc, deleteDoc, getDocs, collection } from 'firebase/firestore'
 import { onAuthStateChanged } from 'firebase/auth';
 import queryString from 'query-string';
 
+import { useNavigate } from 'react-router-dom';
+
 
 export default function MyLibrary() {
+
+  const [currentUser, setCurrentUser] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        setCurrentUser(user);
+      } else {
+        navigate('/sign-in');
+      }
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, [navigate]);
 
     const [steamGames, setSteamGames] = useState([])
     const [epicGames, setEpicGames] = useState([])

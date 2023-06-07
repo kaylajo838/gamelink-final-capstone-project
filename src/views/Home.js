@@ -13,8 +13,27 @@ import epicLogo from '../images/epic-logo.png'
 import xboxLogo from '../images/xbox-logo.png'
 import psLogo from '../images/playstation-logo.png'
 
+import { useNavigate } from 'react-router-dom';
+import { auth } from '../firebase';
+
 
 export default function Home() {
+
+  const [currentUser, setCurrentUser] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        setCurrentUser(user);
+      } else {
+        navigate('/sign-in');
+      }
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, [navigate]);
 
   const [recentGameTitle, setRecentGameTitle] = useState([])
   const [alltimeGameTitle, setAlltimeGameTitle] = useState([])

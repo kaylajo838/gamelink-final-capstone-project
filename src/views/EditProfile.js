@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useNavigate, useEffect } from 'react';
 import "./EditProfile.css"
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -20,6 +20,22 @@ import { Dialog, DialogTitle, DialogContent, DialogActions} from "@mui/material"
 
 
 export default function EditProfile() {
+
+  const [currentUser, setCurrentUser] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        setCurrentUser(user);
+      } else {
+        navigate('/sign-in');
+      }
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, [navigate]);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
