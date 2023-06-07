@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { auth } from './firebase';
 import LoadingSpinner from '../src/components/LoadingSpinner';
 
@@ -14,10 +14,6 @@ import SignIn from './views/SignIn';
 import Wishlist from './views/Wishlist';
 import EditProfile from './views/EditProfile';
 import Profile from './views/Profile';
-
-
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
 
 
 function App() {
