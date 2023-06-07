@@ -1,5 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
 import { auth } from './firebase';
+import LoadingSpinner from '../src/components/LoadingSpinner';
 
 import './App.css';
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
@@ -33,9 +34,9 @@ function App() {
     return () => unsubscribe();
   }, []);
 
-  // if (loading) {
-  //   return <div><CircularProgress /></div>; // Or replace with a loading spinner
-  // }
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
 
   return (
