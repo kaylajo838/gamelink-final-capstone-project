@@ -183,7 +183,7 @@ export default function SignIn() {
                   fontSize: 16,
                 }}
               >
-                Don't have an account? Sign up <Link href="/sign-up" sx={{ color: "white", textDecoration: "underline", "&:hover": {color: "#2ca627"}}}>here</Link>.
+                Don't have an account? Sign up <Link to="/sign-up" sx={{ color: "white", textDecoration: "underline", "&:hover": {color: "#2ca627"}}}>here</Link>.
               </Typography>
               <Copyright sx={{ mt: 2, color: "white" }} />
             </Container>
