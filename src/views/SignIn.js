@@ -6,7 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+// import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -16,13 +16,13 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { auth, db } from '../firebase'
 import { signInWithEmailAndPassword, updateProfile, fetchSignInMethodsForEmail } from 'firebase/auth';
 import { doc, setDoc } from "firebase/firestore";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link  href="https://github.com/kaylajo838" sx={{ color: "white", textDecoration: "underline", "&:hover": {color: "#2ca627"}}}>
+      <Link  to="https://github.com/kaylajo838" sx={{ color: "white", textDecoration: "underline", "&:hover": {color: "#2ca627"}}}>
         Kayla Imming
       </Link>{' '}
       {new Date().getFullYear()}
@@ -177,7 +177,7 @@ export default function SignIn() {
                 </Box>
               </Box>
               <Typography
-                component="h1"
+                component="p"
                 variant="h5"
                 sx={{
                   fontSize: 16,
